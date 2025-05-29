@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+# Fitness Exercises Visualization
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Repository for a visualization of fitness exercises implemented using D3.js and a React app.  
+Created for the **Information Visualization** class at **Sungkyunkwan University (SKKU)**.  
+**Student ID:** 2025318365
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Project Overview
 
-### `npm start`
+This project presents a visual interface that allows users to explore various fitness exercises, ranked by a custom Hypertrophy Score. This score is calculated using scientifically relevant metrics including EMG activation and Stimulus-to-Fatigue Ratio (SFR). It also incorporates whether the exercise provides a deep loaded stretch — a key factor for muscle hypertrophy — as well as user ratings sourced from members of Bodybuilding.com.
+- Hover and click bars to explore exercises by muscle group and view detailed information about each exercise
+- Click on x-axis labels to drill down into a specific muscle group and see more exercises related to it
+- Hold Ctrl (or ⌘ on Mac) and click to select and compare two exercises side by side
+- Filter exercises by equipment type using the sidebar
+- Choose how many top exercises to display per muscle group with a dropdown selector
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How to Run This Project Locally
 
-### `npm test`
+Follow these steps to run the interface on your computer:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 1. **Clone the repository**
 
-### `npm run build`
+Open a terminal and run:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone https://github.com/eduard-gashi/fitness-exercises-visualization.git
+cd fitness-exercises-visualization
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2. Install Dependencies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Make sure you have **Node.js** and **npm** installed on your machine.
 
-### `npm run eject`
+```bash
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 3. Start the Development Server
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Run the following command to start the React development server:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Your browser should automatically open at:
 
-## Learn More
+```
+http://localhost:3000
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+If it doesn’t, open that address manually.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Technologies Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **React.js** – Frontend framework
+- **D3.js** – Data-driven visualizations
+- **Framer Motion** – Smooth transitions and animations
+- **JavaScript (ES6+)**
+- **CSS-in-JS** – Inline React styling
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Author
 
-### Making a Progressive Web App
+**Eduard Gashi**  
+Student ID: 2025318365  
+Information Visualization @ SKKU
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
