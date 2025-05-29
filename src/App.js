@@ -139,6 +139,15 @@ function App() {
       setHoveredExercise(null);
     }
   }
+  
+  // Handle muscle group click to filter exercises
+  function handleMuscleGroupClick(group) {
+    setSelectedMuscleGroup(group);
+    setSelectedExercises([]);         // clear comparison panel
+    setCtrlSelectedExercises([]);     // clear ctrl-click state
+    setHoveredExercise(null);         // clear hover
+    setComparisonMode(false);         // reset mode
+  }
 
   return (
     <div style={{
@@ -192,7 +201,7 @@ function App() {
             selectedExercises={ctrlSelectedExercises}
             comparisonMode={ctrlSelectedExercises.length === 2}
             xKey={selectedMuscleGroup ? "Target_Muscle" : "Muscle_Group"}
-            onMuscleGroupClick={setSelectedMuscleGroup}
+            onMuscleGroupClick={handleMuscleGroupClick}
           />
           {/* Centered Back Button only after selection */}
           {selectedMuscleGroup && (
