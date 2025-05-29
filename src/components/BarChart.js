@@ -161,8 +161,6 @@ export default function BarChart({
           });
       });
     }
-
-
     else if (groupedData && groupedData instanceof Map) {
       // 📊 Overview view
       const muscleGroups = Array.from(groupedData.keys());
@@ -198,10 +196,12 @@ export default function BarChart({
       muscleGroups.forEach(group => {
         const x = outerX(group);
         const width = outerX.bandwidth();
-        const padding = 6;
+        const horizontalPadding = 22; // wider label
+        const verticalPadding = 10;    // keep original height
 
         const g = labelGroup.append("g")
           .attr("cursor", "pointer")
+          .attr("transform", "translate(0, 5)") // ← move the button down 12px
           .on("click", () => onMuscleGroupClick?.(group))
           .on("mouseover", function () {
             d3.select(this).select("rect").attr("fill", "rgba(104, 241, 232, 0.6)");
@@ -221,11 +221,19 @@ export default function BarChart({
 
         const bbox = text.node().getBBox();
 
+        g.append("image")
+          .attr("xlink:href", "/lupe.png")
+          .attr("x", bbox.x + bbox.width + 4) // 4px padding from right edge
+          .attr("y", bbox.y + bbox.height / 2) // vertically center to text
+          .attr("width", 14)
+          .attr("height", 14)
+          .attr("opacity", 0.6);
+
         g.insert("rect", "text")
-          .attr("x", bbox.x - padding)
-          .attr("y", bbox.y - padding)
-          .attr("width", bbox.width + 2 * padding)
-          .attr("height", bbox.height + 2 * padding)
+          .attr("x", bbox.x - horizontalPadding)
+          .attr("y", bbox.y - verticalPadding)
+          .attr("width", bbox.width + 2 * horizontalPadding)
+          .attr("height", bbox.height + 2 * verticalPadding)
           .attr("rx", 6)
           .attr("fill", "#f9f9f9")
           .attr("stroke", "#ccc");
