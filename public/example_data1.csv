@@ -1,0 +1,86 @@
+Exercise_Name,Muscle_Group,Equipment,Target_Muscle,Hypertrophy_Tier,SFR,Stretch_Bonus
+Rack Pull with Bands,Lower Back,Barbell,General,4,2.8,1
+Wide-grip barbell curl,Biceps,Barbell,General,2,1.8,0
+Decline oblique crunch,Abdominals,None,General,5,1.0,0
+Rack Pull with Bands,Lower Back,Barbell,General,4,1.8,1
+Weighted Jump Squat,Quadriceps,Barbell,General,2,2.7,1
+Standing Hip Circles,Abductors,Body Only,General,2,2.1,1
+Decline Push-Up,Chest,Body Only,General,1,1.2,0
+Barbell Hip Thrust,Glutes,Barbell,General,2,2.0,0
+Straight-arm dumbbell pull-over,Chest,Dumbbell,General,4,2.3,1
+Power snatch-,Quadriceps,Barbell,General,5,2.2,0
+Single Leg Push-off,Quadriceps,Other,General,1,2.8,0
+Side Wrist Pull,Shoulders,None,General,5,1.8,0
+Car driver,Shoulders,Other,General,1,1.2,0
+Wide Stance Stiff Legs,Hamstrings,Barbell,General,1,2.6,0
+Treadmill jogging,Quadriceps,Machine,General,1,2.7,0
+Front Squats With Two Kettlebells,Quadriceps,Kettlebells,General,2,1.9,0
+Seated Cable Rows,Middle Back,Cable,General,2,1.9,0
+Seated face pull,Shoulders,Cable,General,3,2.6,0
+Bench Press - Powerlifting,Triceps,Barbell,General,3,1.4,1
+Seated Dumbbell Press,Shoulders,Dumbbell,General,5,2.1,0
+Cocoons,Abdominals,Body Only,General,2,1.8,0
+Reverse Grip Triceps Pushdown,Triceps,Cable,General,5,2.8,1
+Single-leg glute bridge,Glutes,Body Only,General,2,2.2,0
+Kneeling cable oblique crunch,Abdominals,Cable,General,4,2.7,1
+Glute Ham Raise,Hamstrings,Machine,General,4,2.5,1
+Preacher Hammer Dumbbell Curl,Biceps,Dumbbell,General,1,2.7,1
+Dumbbell Flyes,Chest,Dumbbell,General,2,1.2,1
+Bodyweight Reverse Lunge,Quadriceps,Body Only,General,3,1.1,0
+Incline Hammer Curls,Biceps,Dumbbell,General,4,2.5,0
+Decline Smith Press,Chest,Machine,General,3,2.4,1
+Good Morning,Hamstrings,Barbell,General,2,1.7,1
+Burpee,Quadriceps,Body Only,General,5,1.2,0
+Palms-Down Dumbbell Wrist Curl Over A Bench,Forearms,Dumbbell,General,1,2.0,0
+Single-arm incline rear delt raise,Shoulders,Dumbbell,General,4,2.9,0
+Plate Pinch,Forearms,Other,General,4,2.9,1
+Close-grip bench press,Chest,Barbell,General,2,2.4,0
+Exercise ball crunch,Abdominals,Exercise Ball,General,2,1.4,1
+Split Squat with Dumbbells,Quadriceps,Dumbbell,General,5,2.1,0
+Seated One-Arm Dumbbell Palms-Up Wrist Curl,Forearms,Dumbbell,General,3,2.7,1
+Cross-Body Crunch,Abdominals,Body Only,General,3,2.3,1
+Power clean,Hamstrings,Barbell,General,1,2.7,0
+Power Partials,Shoulders,Dumbbell,General,2,1.2,0
+Palms-Down Dumbbell Wrist Curl Over A Bench,Forearms,Dumbbell,General,2,2.5,0
+Reverse-grip bent-over row,Middle Back,Barbell,General,5,1.6,0
+Standing dumbbell upright row,Traps,Dumbbell,General,5,2.4,0
+Back extension,Lower Back,Body Only,General,1,2.1,0
+Seated Dumbbell Press,Shoulders,Dumbbell,General,3,1.7,0
+Close-grip EZ-bar curl,Biceps,Barbell,General,4,1.3,0
+Incline Dumbbell Bench With Palms Facing In,Chest,Dumbbell,General,3,1.3,1
+Reverse Cable Curl,Biceps,Cable,General,5,1.6,0
+Push-Ups,Chest,Body-Only,Pectorals,3,3.5,0
+Incline Dumbbell Bench Press,Chest,Dumbbell,Upper Chest,2,4.2,1
+Barbell Bench Press,Chest,Barbell,Pectorals,1,4.5,1
+Incline Cable Fly,Chest,Cable,Upper Chest,2,3.9,1
+Machine Chest Press,Chest,Machine,Pectorals,3,3.7,0
+Superman Hold,Lower Back,Body-Only,Erector Spinae,3,3.0,0
+Dumbbell Row,Middle Back,Dumbbell,Lats,2,4.0,1
+Barbell Bent-Over Row,Middle Back,Barbell,Lats,1,4.3,1
+Cable Row,Middle Back,Cable,Lats,2,3.8,1
+Lat Pulldown,Middle Back,Machine,Lats,2,3.9,0
+Chin-Ups,Biceps,Body-Only,Biceps Brachii,2,3.9,1
+Incline Dumbbell Curl,Biceps,Dumbbell,Biceps Brachii,2,4.1,1
+Barbell Curl,Biceps,Barbell,Biceps Brachii,1,4.0,0
+Cable Curl,Biceps,Cable,Biceps Brachii,2,3.7,0
+Machine Preacher Curl,Biceps,Machine,Biceps Brachii,3,3.8,0
+Bodyweight Dips,Triceps,Body-Only,Triceps Brachii,2,3.9,1
+Dumbbell Kickbacks,Triceps,Dumbbell,Triceps Brachii,3,3.5,0
+Barbell Close-Grip Bench,Triceps,Barbell,Triceps Brachii,2,4.2,1
+Cable Pushdown,Triceps,Cable,Triceps Brachii,2,3.7,0
+Machine Triceps Extension,Triceps,Machine,Triceps Brachii,3,3.6,0
+Pike Push-Ups,Shoulders,Body-Only,Deltoids,2,3.5,0
+Dumbbell Lateral Raise,Shoulders,Dumbbell,Lateral Deltoid,2,3.8,1
+Barbell Overhead Press,Shoulders,Barbell,Deltoids,1,4.1,0
+Cable Face Pull,Shoulders,Cable,Rear Deltoid,2,3.7,0
+Machine Shoulder Press,Shoulders,Machine,Deltoids,3,3.9,0
+Bodyweight Squats,Quadriceps,Body-Only,Quads,2,3.4,0
+Dumbbell Goblet Squat,Quadriceps,Dumbbell,Quads,2,3.9,1
+Barbell Back Squat,Quadriceps,Barbell,Quads,1,4.3,1
+Cable Pull-Through,Glutes,Cable,Glutes,2,3.6,1
+Leg Press,Quadriceps,Machine,Quads,2,3.7,0
+Glute Bridge,Glutes,Body-Only,Glutes,2,3.3,0
+Dumbbell Romanian Deadlift,Hamstrings,Dumbbell,Hamstrings,2,4.2,1
+Barbell Hip Thrust,Glutes,Barbell,Glutes,1,4.4,1
+Cable Kickback,Glutes,Cable,Glutes,2,3.5,1
+Glute Kickback Machine,Glutes,Machine,Glutes,3,3.7,0

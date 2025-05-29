@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>D3.js Playground</title>
+  <style>
+    svg {
+      width: 500px;
+      height: 500px;
+      border: 1px solid #ccc;
+    }
+  </style>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <svg id="svg"></svg>
+
+  <script>
+    // Select the SVG element
+    const svg = d3.select("#svg");
+
+    // Append a red circle
+    svg.append("circle")
+      .attr("cx", 100)   // x-coordinate
+      .attr("cy", 100)   // y-coordinate
+      .attr("r", 40)     // radius
+      .attr("fill", "red");  // color
+  </script>
+</body>
+
+</html>
