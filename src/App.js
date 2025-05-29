@@ -35,44 +35,45 @@ function App() {
 
   // Load and clean CSV
   useEffect(() => {
-    d3.csv("/fitness_exercises.csv").then(data => {
-      console.log("Loaded rows:", data.length);
+    d3.csv(process.env.PUBLIC_URL + "/fitness_exercises.csv")
+      .then(data => {
+        console.log("Loaded rows:", data.length);
 
-      const cleaned = data.map(row => {
-        row.User_Rating = +row.User_Rating;
-        row.SFR = +row.SFR;
-        row.Stretch_Bonus = +row.Stretch_Bonus;
-        row.EMG_Activation = +row.EMG_Activation;
-        const normalizedEMG = (row.EMG_Activation / 100) * 10;  // Normalize percentage to value from 1-10
+        const cleaned = data.map(row => {
+          row.User_Rating = +row.User_Rating;
+          row.SFR = +row.SFR;
+          row.Stretch_Bonus = +row.Stretch_Bonus;
+          row.EMG_Activation = +row.EMG_Activation;
+          const normalizedEMG = (row.EMG_Activation / 100) * 10;  // Normalize percentage to value from 1-10
 
-        row.Target_Muscle_List = row.Target_Muscle
-          ? row.Target_Muscle.split(",").map(d => d.trim())
-          : [];
+          row.Target_Muscle_List = row.Target_Muscle
+            ? row.Target_Muscle.split(",").map(d => d.trim())
+            : [];
 
-        // Use the first one as primary
-        row.Target_Muscle = row.Target_Muscle_List[0] || "Unknown";
+          // Use the first one as primary
+          row.Target_Muscle = row.Target_Muscle_List[0] || "Unknown";
 
-        row.Hypertrophy_Score = (
-          row.SFR * weights.SFR +
-          normalizedEMG * weights.EMG +
-          row.User_Rating * weights.User_Rating +
-          row.Stretch_Bonus * 10 * weights.Stretch_Bonus
-        );
-        return row;
+          row.Hypertrophy_Score = (
+            row.SFR * weights.SFR +
+            normalizedEMG * weights.EMG +
+            row.User_Rating * weights.User_Rating +
+            row.Stretch_Bonus * 10 * weights.Stretch_Bonus
+          );
+          return row;
+        });
+
+        // Normalize scores
+        const rawScores = cleaned.map(d => d.Hypertrophy_Score);
+        const min = d3.min(rawScores);
+        const max = d3.max(rawScores);
+
+        cleaned.forEach(d => {
+          d.Hypertrophy_Score = ((d.Hypertrophy_Score - min) / (max - min)) * 10;
+          d.Hypertrophy_Score = Math.round(d.Hypertrophy_Score * 10) / 10;
+        });
+
+        setRawData(cleaned);
       });
-
-      // Normalize scores
-      const rawScores = cleaned.map(d => d.Hypertrophy_Score);
-      const min = d3.min(rawScores);
-      const max = d3.max(rawScores);
-
-      cleaned.forEach(d => {
-        d.Hypertrophy_Score = ((d.Hypertrophy_Score - min) / (max - min)) * 10;
-        d.Hypertrophy_Score = Math.round(d.Hypertrophy_Score * 10) / 10;
-      });
-
-      setRawData(cleaned);
-    });
   }, []);
 
   // Recalculate hypertrophy scores when weights change
