@@ -222,9 +222,9 @@ export default function BarChart({
         const bbox = text.node().getBBox();
 
         g.append("image")
-          .attr("xlink:href", "/lupe.png")
-          .attr("x", bbox.x + bbox.width + 4) // 4px padding from right edge
-          .attr("y", bbox.y + bbox.height / 2) // vertically center to text
+          .attr("xlink:href", process.env.PUBLIC_URL + "/magnifying_glass.png")
+          .attr("x", bbox.x + bbox.width + 4) 
+          .attr("y", bbox.y + bbox.height / 2) 
           .attr("width", 14)
           .attr("height", 14)
           .attr("opacity", 0.6);
