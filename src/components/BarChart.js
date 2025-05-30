@@ -8,8 +8,6 @@ export default function BarChart({
   onBarClick,
   onBarHover,
   selectedExercises,
-  comparisonMode,
-  xKey,
   maxExercises,
   onMuscleGroupClick
 }) {
@@ -264,8 +262,8 @@ export default function BarChart({
     onBarClick,
     onBarHover,
     selectedExercises,
-    comparisonMode,
-    maxExercises
+    maxExercises,
+    onMuscleGroupClick
   ]);
 
   return <svg ref={ref}></svg>;

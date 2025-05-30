@@ -22,7 +22,6 @@ function App() {
   const [hoveredExercise, setHoveredExercise] = useState(null);
   const [selectedExercises, setSelectedExercises] = useState([]);
   const [ctrlSelectedExercises, setCtrlSelectedExercises] = useState([]);
-  const [comparisonMode, setComparisonMode] = useState(false);
   const [maxExercises, setMaxExercises] = useState(1);
   const [showWeights, setShowWeights] = useState(false);
   const [weights, setWeights] = useState({
@@ -65,7 +64,7 @@ function App() {
 
       setRawData(cleaned);
     });
-  }, []);
+  }, [weights]);
 
   useEffect(() => {
     if (!rawData.length) return;
@@ -155,7 +154,6 @@ function App() {
     setSelectedExercises([]);
     setCtrlSelectedExercises([]);
     setHoveredExercise(null);
-    setComparisonMode(false);
   }
 
   function updateWeight(key, value) {
@@ -218,7 +216,6 @@ function App() {
             onBarClick={handleBarClick}
             onBarHover={setHoveredExercise}
             selectedExercises={ctrlSelectedExercises}
-            comparisonMode={ctrlSelectedExercises.length === 2}
             xKey={selectedMuscleGroup ? "Target_Muscle" : "Muscle_Group"}
             onMuscleGroupClick={handleMuscleGroupClick}
           />
@@ -285,7 +282,6 @@ function App() {
                   setSelectedMuscleGroup(null);
                   setSelectedExercises([]);
                   setCtrlSelectedExercises([]);
-                  setComparisonMode(false);
                 }}
               >
                 ← Back to All Muscle Groups
