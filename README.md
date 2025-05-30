@@ -66,6 +66,12 @@ If it doesn’t, open that address manually.
 
 ---
 
+## Instructor
+
+**Professor Jaemin Jo**  
+Information Visualization – Sungkyunkwan University (SKKU)
+
+
 ## Author
 
 **Eduard Gashi**  

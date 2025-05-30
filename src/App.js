@@ -1,104 +1,91 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import * as d3 from "d3";
 import BarChart from "./components/BarChart";
 import DumbbellChart from "./components/DumbbellChart";
 import SingleMetricChart from "./components/SingleMetricChart";
-import * as d3 from "d3";
 
 const EQUIPMENT_COLORS = {
-  "Dumbbell": "#8e44ad",     // purple
-  "Barbell": "#2ecc71",      // green
-  "Machine": "#f39c12",      // orange
-  "Body Only": "#3498db",    // blue (replaces red)
-  "Cable": "#e74c3c"         // red
+  Dumbbell: "#8e44ad",
+  Barbell: "#2ecc71",
+  Machine: "#f39c12",
+  "Body Only": "#3498db",
+  Cable: "#e74c3c"
 };
 
 function App() {
   const [rawData, setRawData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [groupedData, setGroupedData] = useState(new Map());
   const [selectedEquipment, setSelectedEquipment] = useState(Object.keys(EQUIPMENT_COLORS));
   const [selectedMuscleGroup, setSelectedMuscleGroup] = useState(null);
   const [hoveredExercise, setHoveredExercise] = useState(null);
   const [selectedExercises, setSelectedExercises] = useState([]);
-  const [comparisonMode, setComparisonMode] = useState(false);
   const [ctrlSelectedExercises, setCtrlSelectedExercises] = useState([]);
+  const [comparisonMode, setComparisonMode] = useState(false);
   const [maxExercises, setMaxExercises] = useState(1);
   const [showWeights, setShowWeights] = useState(false);
   const [weights, setWeights] = useState({
     SFR: 0.35,
-    EMG: 0.30,
+    EMG: 0.3,
     User_Rating: 0.25,
-    Stretch_Bonus: 0.10
+    Stretch_Bonus: 0.1
   });
 
-
-
-  // Load and clean CSV
   useEffect(() => {
-    d3.csv(process.env.PUBLIC_URL + "/fitness_exercises.csv")
-      .then(data => {
-        console.log("Loaded rows:", data.length);
+    d3.csv(process.env.PUBLIC_URL + "/fitness_exercises.csv").then((data) => {
+      const cleaned = data.map((row) => {
+        row.User_Rating = +row.User_Rating;
+        row.SFR = +row.SFR;
+        row.Stretch_Bonus = +row.Stretch_Bonus;
+        row.EMG_Activation = +row.EMG_Activation;
 
-        const cleaned = data.map(row => {
-          row.User_Rating = +row.User_Rating;
-          row.SFR = +row.SFR;
-          row.Stretch_Bonus = +row.Stretch_Bonus;
-          row.EMG_Activation = +row.EMG_Activation;
-          const normalizedEMG = (row.EMG_Activation / 100) * 10;  // Normalize percentage to value from 1-10
+        const normalizedEMG = (row.EMG_Activation / 100) * 10;
+        row.Target_Muscle_List = row.Target_Muscle ? row.Target_Muscle.split(",").map((d) => d.trim()) : [];
+        row.Target_Muscle = row.Target_Muscle_List[0] || "Unknown";
 
-          row.Target_Muscle_List = row.Target_Muscle
-            ? row.Target_Muscle.split(",").map(d => d.trim())
-            : [];
+        row.Hypertrophy_Score = (
+          row.SFR * weights.SFR +
+          normalizedEMG * weights.EMG +
+          row.User_Rating * weights.User_Rating +
+          row.Stretch_Bonus * 10 * weights.Stretch_Bonus
+        );
 
-          // Use the first one as primary
-          row.Target_Muscle = row.Target_Muscle_List[0] || "Unknown";
-
-          row.Hypertrophy_Score = (
-            row.SFR * weights.SFR +
-            normalizedEMG * weights.EMG +
-            row.User_Rating * weights.User_Rating +
-            row.Stretch_Bonus * 10 * weights.Stretch_Bonus
-          );
-          return row;
-        });
-
-        // Normalize scores
-        const rawScores = cleaned.map(d => d.Hypertrophy_Score);
-        const min = d3.min(rawScores);
-        const max = d3.max(rawScores);
-
-        cleaned.forEach(d => {
-          d.Hypertrophy_Score = ((d.Hypertrophy_Score - min) / (max - min)) * 10;
-          d.Hypertrophy_Score = Math.round(d.Hypertrophy_Score * 10) / 10;
-        });
-
-        setRawData(cleaned);
+        return row;
       });
+
+      const rawScores = cleaned.map((d) => d.Hypertrophy_Score);
+      const min = d3.min(rawScores);
+      const max = d3.max(rawScores);
+
+      cleaned.forEach((d) => {
+        d.Hypertrophy_Score = ((d.Hypertrophy_Score - min) / (max - min)) * 10;
+        d.Hypertrophy_Score = Math.round(d.Hypertrophy_Score * 10) / 10;
+      });
+
+      setRawData(cleaned);
+    });
   }, []);
 
-  // Recalculate hypertrophy scores when weights change
   useEffect(() => {
     if (!rawData.length) return;
 
-    const updated = rawData.map(row => {
+    const updated = rawData.map((row) => {
       const normalizedEMG = (row.EMG_Activation / 100) * 10;
-
       const score = (
         row.SFR * weights.SFR +
         normalizedEMG * weights.EMG +
         row.User_Rating * weights.User_Rating +
         row.Stretch_Bonus * 10 * weights.Stretch_Bonus
       );
-
       return { ...row, Hypertrophy_Score: score };
     });
 
-    // Normalize scores
-    const scores = updated.map(d => d.Hypertrophy_Score);
+    const scores = updated.map((d) => d.Hypertrophy_Score);
     const min = d3.min(scores);
     const max = d3.max(scores);
 
-    updated.forEach(d => {
+    updated.forEach((d) => {
       d.Hypertrophy_Score = ((d.Hypertrophy_Score - min) / (max - min)) * 10;
       d.Hypertrophy_Score = Math.round(d.Hypertrophy_Score * 10) / 10;
     });
@@ -106,22 +93,20 @@ function App() {
     setRawData(updated);
   }, [weights]);
 
-  // Filter and prepare data for visualization
   useEffect(() => {
     if (!rawData.length) return;
 
     if (selectedMuscleGroup) {
       const filtered = rawData.filter(
-        d =>
+        (d) =>
           selectedEquipment.includes(d.Equipment) &&
           d.Muscle_Group === selectedMuscleGroup
       );
-      setFilteredData(filtered); // array
+      setFilteredData(filtered);
     } else {
-      // Overview view
       const grouped = d3.group(
-        rawData.filter(d => selectedEquipment.includes(d.Equipment)),
-        d => d.Muscle_Group
+        rawData.filter((d) => selectedEquipment.includes(d.Equipment)),
+        (d) => d.Muscle_Group
       );
 
       const topGrouped = new Map(
@@ -133,60 +118,51 @@ function App() {
         ])
       );
 
-      // Filtered data is a Map<Muscle_Group, Exercise[]>
+      setGroupedData(grouped);
       setFilteredData(topGrouped);
-
     }
   }, [rawData, selectedEquipment, selectedMuscleGroup, maxExercises]);
 
-
   function handleBarClick(exercise, event) {
     if (event.ctrlKey || event.metaKey) {
-      setCtrlSelectedExercises(prev => {
-        // Already selected → do nothing
-        if (prev.find(e => e.Exercise_Name === exercise.Exercise_Name)) return prev;
+      setCtrlSelectedExercises((prev) => {
+        if (prev.find((e) => e.Exercise_Name === exercise.Exercise_Name)) return prev;
 
         const updated = [...prev, exercise];
-
-        // If third exercise is selected → clear everything
         if (updated.length > 2) {
           setSelectedExercises([]);
           setCtrlSelectedExercises([]);
           return [];
         }
 
-        // If second exercise is selected → enter comparison mode
         if (updated.length === 2) {
           setSelectedExercises(updated);
         } else if (updated.length === 1) {
-          // 🟢 Show first selected exercise in detail panel
           setSelectedExercises([exercise]);
         }
 
         return updated;
       });
     } else {
-      // Normal click → reset everything
       setCtrlSelectedExercises([]);
       setSelectedExercises([exercise]);
       setHoveredExercise(null);
     }
   }
 
-  // Handle muscle group click to filter exercises
   function handleMuscleGroupClick(group) {
     setSelectedMuscleGroup(group);
-    setSelectedExercises([]);         // clear comparison panel
-    setCtrlSelectedExercises([]);     // clear ctrl-click state
-    setHoveredExercise(null);         // clear hover
-    setComparisonMode(false);         // reset mode
+    setSelectedExercises([]);
+    setCtrlSelectedExercises([]);
+    setHoveredExercise(null);
+    setComparisonMode(false);
   }
 
-  // Function to update weights dynamically
   function updateWeight(key, value) {
-    setWeights(prev => {
+    setWeights((prev) => {
       const updated = { ...prev, [key]: value };
       const total = Object.values(updated).reduce((a, b) => a + b, 0);
+
       return Object.fromEntries(
         Object.entries(updated).map(([k, v]) => [k, v / total])
       );
@@ -218,7 +194,6 @@ function App() {
         Fitness Exercises Explorer
       </motion.h1>
 
-
       {/* Main Flex Container: BarChart + Right Panel */}
       <div
         style={{
@@ -226,9 +201,9 @@ function App() {
           justifyContent: "center",
           alignItems: "flex-start",
           gap: "500px",
-          maxWidth: "1500px", // limit total width
-          margin: "0 auto",   // center horizontally
-          padding: "0 40px",  // optional inner padding
+          maxWidth: "1500px",
+          margin: "0 auto",
+          padding: "0 40px",
           width: "100%",
         }}
       >
@@ -247,15 +222,15 @@ function App() {
             xKey={selectedMuscleGroup ? "Target_Muscle" : "Muscle_Group"}
             onMuscleGroupClick={handleMuscleGroupClick}
           />
-          {/* Centered Back Button only after selection */}
+          {/* Back Button */}
           {selectedMuscleGroup && (
             <div
               style={{
                 marginBottom: "10px",
                 display: "flex",
                 justifyContent: "center",
-                marginBottom: "20px", // space below the button
-                marginTop: "-770px",   // move it above the chart slightly
+                marginBottom: "20px",
+                marginTop: "-770px",
               }}
             >
               <h2
@@ -284,8 +259,8 @@ function App() {
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
-                marginBottom: "20px", // space below the button
-                marginTop: "640px",   // move it above the chart slightly
+                marginBottom: "20px",
+                marginTop: "640px",
               }}>
               <button
                 style={{
@@ -461,7 +436,7 @@ function App() {
               </div>
             </div>
 
-            {/* Amount of Exercises - full width below the row */}
+            {/* Amount of Exercises */}
             <div style={{
               border: "1px solid #ccc",
               borderRadius: "6px",
@@ -470,14 +445,38 @@ function App() {
               fontSize: "14px"
             }}>
               <h3>Amount of Exercises to show</h3>
-              <select value={maxExercises} onChange={(e) => setMaxExercises(Number(e.target.value))}>
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-                <option value={5}>5</option>
-              </select>
+              {(() => {
+                let maxOptions = 10;
+                if (!selectedMuscleGroup && groupedData instanceof Map) {
+                  const lengths = Array.from(groupedData.values(), g => g.length);
+                  if (lengths.length > 0) {
+                    maxOptions = Math.max(...lengths);
+                  }
+                } else if (selectedMuscleGroup && Array.isArray(filteredData)) {
+                  maxOptions = filteredData.length;
+                }
+
+                if (!Number.isFinite(maxOptions) || maxOptions < 1) {
+                  maxOptions = 1;
+                }
+
+                const fixedOptions = [1, 2, 3, 4, 5];
+                const options = fixedOptions.filter(n => n <= maxOptions);
+
+                return (
+                  <select value={maxExercises} onChange={(e) => {
+                    const value = e.target.value === "max" ? maxOptions : Number(e.target.value);
+                    setMaxExercises(value);
+                  }}>
+                    {options.map(n => (
+                      <option key={n} value={n}>{n}</option>
+                    ))}
+                    {maxOptions > 5 && <option value="max">Max</option>}
+                  </select>
+                );
+              })()}
             </div>
+
           </div>
 
           {/* Info / Comparison Panel */}
@@ -583,11 +582,11 @@ function App() {
                 )}
               </>
             )}
-
           </div>
-
         </div>
       </div>
+
+      {/* Footer */}
       <footer style={{
         marginTop: "60px",
         fontSize: "12px",
